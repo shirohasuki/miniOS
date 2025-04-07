@@ -10,32 +10,36 @@ set(CMAKE_ASM_COMPILER riscv64-unknown-elf-gcc)
 set(CMAKE_OBJCOPY riscv64-unknown-elf-objcopy)
 set(CMAKE_OBJDUMP riscv64-unknown-elf-objdump)
 
+set(KERNEL_PATH ${CMAKE_SOURCE_DIR}/src/kernel)
+
 add_subdirectory(src/kernel)
 add_subdirectory(platform)
+add_subdirectory(lib)
 
-add_executable(os.elf
+add_executable(miniOS.elf
   $<TARGET_OBJECTS:kernel>
   $<TARGET_OBJECTS:platform>
+  $<TARGET_OBJECTS:lib>
 )
 
-set_target_properties(os.elf PROPERTIES
-  LINK_FLAGS "-Ttext=0x00000000"
+set_target_properties(miniOS.elf PROPERTIES
+  LINK_FLAGS "-T${KERNEL_PATH}/minios.ld"
 )
 
-add_custom_command(TARGET os.elf POST_BUILD
-  COMMAND ${CMAKE_OBJCOPY} -O binary os.elf os.bin
-  COMMAND ${CMAKE_OBJCOPY} -O ihex os.elf os.hex
+add_custom_command(TARGET miniOS.elf POST_BUILD
+  COMMAND ${CMAKE_OBJCOPY} -O binary miniOS.elf miniOS.bin
+  COMMAND ${CMAKE_OBJCOPY} -O ihex miniOS.elf miniOS.hex
   COMMENT "Generate binary and hex file"
 )
 
 add_custom_target(flash
-  COMMAND openocd -f openocd.cfg -c init -c halt -c "program os.bin" -c exit
-  DEPENDS os.elf
-  COMMENT "Flashing os.bin to board"
+  COMMAND openocd -f openocd.cfg -c init -c halt -c "program miniOS.bin" -c exit
+  DEPENDS miniOS.elf
+  COMMENT "Flashing miniOS.bin to board"
 )
 
 add_custom_target(code
-  COMMAND ${CMAKE_OBJDUMP} -S os.elf | less
-  DEPENDS os.elf
-  COMMENT "Disassembling os.elf"
+  COMMAND ${CMAKE_OBJDUMP} -S miniOS.elf | less
+  DEPENDS miniOS.elf
+  COMMENT "Disassembling miniOS.elf"
 ) 
