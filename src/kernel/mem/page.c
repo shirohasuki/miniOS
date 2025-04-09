@@ -85,7 +85,7 @@ void page_init() {
   printf("TEXT:   0x%x -> 0x%x\n", TEXT_START, TEXT_END);
   printf("RODATA: 0x%x -> 0x%x\n", RODATA_START, RODATA_END);
   printf("DATA:   0x%x -> 0x%x\n", DATA_START, DATA_END);
-  printf("BSS:  0x%x -> 0x%x\n", BSS_START, BSS_END);
+  printf("BSS:    0x%x -> 0x%x\n", BSS_START, BSS_END);
   printf("HEAP:   0x%x -> 0x%x\n", _alloc_start, _alloc_end);
   printf("STACK:  0x%x -> 0x%x\n", STACK_START, STACK_END);
 }

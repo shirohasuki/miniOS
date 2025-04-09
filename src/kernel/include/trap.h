@@ -3,4 +3,6 @@
 
 #include "csr.h"
 
+void trap_init(void);
+
 #endif /* TRAP_H */

@@ -2,8 +2,8 @@
 #include "minilib.h"
 #include "test.h"
 
-void trap_test() {
-  printf("===Trap Test Start===\n");
+void exception_test() {
+  printf("===Exception Test Start===\n");
   /*
    * Synchronous exception code = 4
    * Load address misaligned
@@ -18,5 +18,5 @@ void trap_test() {
   printf("a = %d\n", a);
 
   printf("back from trap!\n");
-  printf("===Trap Test End===\n");
+  printf("===Exception Test End===\n");
 }

@@ -16,6 +16,9 @@ reg_t trap_handler(reg_t epc, reg_t cause) {
     printf("interruption!\n");
   } else {
     printf("exception! code = %d\n", cause_code);
+    /* we don't handle this exception 
+     * so the trap test will loop here
+     */
   }
 
   return return_pc;

@@ -16,7 +16,7 @@ add_library(kernel OBJECT
 
   test/page_test.c 
   test/task_test.c
-  test/trap_test.c
+  test/exception_test.c
 )
 
 target_include_directories(kernel PRIVATE

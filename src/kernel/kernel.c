@@ -11,10 +11,11 @@ void start_kernel(void) {
 
   page_init();
   sched_init();
+  trap_init();
 
   // page_test();
   // task_test();
-  trap_test();
+  exception_test();
 
   while (1) {}
 }

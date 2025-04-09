@@ -15,11 +15,13 @@ set(KERNEL_PATH ${CMAKE_SOURCE_DIR}/src/kernel)
 add_subdirectory(src/kernel)
 add_subdirectory(platform)
 add_subdirectory(minilib)
+# add_subdirectory(src/app)
 
 add_executable(miniOS.elf
   $<TARGET_OBJECTS:kernel>
   $<TARGET_OBJECTS:platform>
   $<TARGET_OBJECTS:minilib>
+  # $<TARGET_OBJECTS:app>
 )
 
 set_target_properties(miniOS.elf PROPERTIES
@@ -43,3 +45,4 @@ add_custom_target(code
   DEPENDS miniOS.elf
   COMMENT "Disassembling miniOS.elf"
 ) 
+

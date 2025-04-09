@@ -8,7 +8,7 @@ MiniOS 是一个基于 RISC-V 架构的简易实时操作系统。
 
 1. 安装依赖
 
-请确保安装好 riscv-roolchain 和 openocd，并添加到系统路径
+请确保安装好 riscv-roolchain (编译需要) 和 openocd (烧写和Debug需要)，并添加到系统路径
 
 2. 编译 miniOS
 
@@ -34,9 +34,9 @@ make flash
 ### Application (TBC)
 
 - minishell
-- Mario
 - flybird
-- badapple
+- miniplayer
+- minislide
 
 ## 参考文档
 

@@ -3,6 +3,6 @@
 
 void page_test(void);
 void task_test(void);
-void trap_test(void);
+void exception_test(void);
 
 #endif /* TEST_H */
