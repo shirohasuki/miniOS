@@ -13,13 +13,11 @@ set(CMAKE_OBJDUMP riscv64-unknown-elf-objdump)
 set(KERNEL_PATH ${CMAKE_SOURCE_DIR}/src/kernel)
 
 add_subdirectory(src/kernel)
-# add_subdirectory(src/minishell)
 add_subdirectory(platform)
 add_subdirectory(minilib)
 
 add_executable(miniOS.elf
   $<TARGET_OBJECTS:kernel>
-  # $<TARGET_OBJECTS:minishell>
   $<TARGET_OBJECTS:platform>
   $<TARGET_OBJECTS:minilib>
 )
@@ -35,7 +33,7 @@ add_custom_command(TARGET miniOS.elf POST_BUILD
 )
 
 add_custom_target(flash
-  COMMAND openocd -f openocd.cfg -c init -c halt -c "program miniOS.bin" -c exit
+  COMMAND openocd -f ./board/wch-riscv.cfg -c init -c halt -c "program miniOS.bin" -c exit
   DEPENDS miniOS.elf
   COMMENT "Flashing miniOS.bin to board"
 )

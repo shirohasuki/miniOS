@@ -8,23 +8,19 @@ add_library(kernel OBJECT
   context/sched.c
   context/entry.S
 
+  csr/csr.c
+  csr/csr.S
+
+  trap/trap.c
+  trap/trap.S
+
   test/page_test.c 
   test/task_test.c
+  test/trap_test.c
 )
 
-# set_source_files_properties(start.S PROPERTIES
-#   LANGUAGE ASM
-# )
-
-# set_source_files_properties(./mem/mem.S PROPERTIES
-#   LANGUAGE ASM
-# )
-
-# set_source_files_properties(./context/entry.S PROPERTIES
-#   LANGUAGE ASM
-# )
-
 target_include_directories(kernel PRIVATE
+  ${CMAKE_SOURCE_DIR}/src/kernel
   ${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}/src/kernel/include
   ${CMAKE_SOURCE_DIR}/platform

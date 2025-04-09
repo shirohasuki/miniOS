@@ -1,8 +1,11 @@
 #include "context.h"
 #include "minilib.h"
+#include "csr.h"
 
 /* defined in entry.S */
 extern void switch_to(struct context *next);
+
+
 
 /*
  * In the standard RISC-V calling convention, the stack pointer sp
@@ -17,10 +20,6 @@ struct context ctx_tasks[MAX_TASKS];
  */
 static int _top = 0;
 static int _current = -1;
-
-static void write_mscratch(reg_t x) {
-  asm volatile("csrw mscratch, %0" : : "r" (x));
-}
 
 void sched_init() {
   write_mscratch(0);

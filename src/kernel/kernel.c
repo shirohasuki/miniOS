@@ -12,9 +12,9 @@ void start_kernel(void) {
   page_init();
   sched_init();
 
-  page_test();
-  task_test();
-  // init_shell();
+  // page_test();
+  // task_test();
+  trap_test();
 
   while (1) {}
 }
