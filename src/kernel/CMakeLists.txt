@@ -8,8 +8,8 @@ add_library(kernel OBJECT
   context/sched.c
   context/entry.S
 
-  csr/csr.c
-  csr/csr.S
+  # csr/csr.c
+  # csr/csr.S
 
   trap/trap.c
   trap/trap.S
@@ -17,6 +17,7 @@ add_library(kernel OBJECT
   test/page_test.c 
   test/task_test.c
   test/exception_test.c
+  test/external_interrupt_test.c
 )
 
 target_include_directories(kernel PRIVATE

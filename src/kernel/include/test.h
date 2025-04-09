@@ -4,5 +4,6 @@
 void page_test(void);
 void task_test(void);
 void exception_test(void);
+void external_interrupt_test(void);
 
 #endif /* TEST_H */

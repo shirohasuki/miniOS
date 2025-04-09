@@ -1,5 +1,5 @@
-#ifndef __MAPPING_H__
-#define __MAPPING_H__
+#ifndef __MAP_H__
+#define __MAP_H__
 
 /*
  * MemoryMap
@@ -8,11 +8,14 @@
  * 0x2001 0000 -- SRAM End
  * 0x4001 0800 -- Port A
  * 0x4001 3800 -- USART1
+ * 0x4000 4400 -- USART2
  * 0x4002 1000 -- RCC
+ * 0xE000 E000 -- PFIC
  */
 #define GPIOA   0x40010800L
 #define USART1  0x40013800L
 #define USART2  0x40004400L
 #define RCC     0x40021000L
+#define PFIC    0xE000E000L
 
-#endif /* __MAPPING_H__ */
+#endif /* __MAP_H__ */

@@ -1,5 +1,6 @@
 #include "types.h"
 #include "ch32v307.h"
+#include "uart.h"
 
 #define RCC_REG(reg)  ((volatile uint32_t *)(RCC + (reg << 2)))
 #define GPIO_REG(reg)  ((volatile uint32_t *)(GPIOA + (reg << 2)))
@@ -119,8 +120,14 @@ void uart1_init() {
    */
   uart1_write_reg(BRR, (uint16_t)0x0341);
 
+  /* Enable Rx for UART1 */
+  *UART1_REG(CTLR1) |= (uint16_t)(1 << 2);
   /* Enable Tx for UART1 */
-  uart1_write_reg(CTLR1, (uint16_t)((uint16_t)(1 << 3) | (uint16_t)(1 << 13)));
+  *UART1_REG(CTLR1) |= (uint16_t)(1 << 3);
+  /* Enable RXNE(RX buff Not Empty) interrupt for UART1 */
+  *UART1_REG(CTLR1) |= (uint16_t)(1 << 5);
+  /* Enable UART1 */
+  *UART1_REG(CTLR1) |= (uint16_t)(1 << 13);
 }
 
 /* UART2 Init*/
@@ -179,8 +186,14 @@ void uart2_init() {
    */
   uart2_write_reg(BRR, (uint16_t)0x0341);
 
+  /* Enable Rx for UART2 */
+  *UART2_REG(CTLR1) |= (uint16_t)(1 << 2);
   /* Enable Tx for UART2 */
-  uart2_write_reg(CTLR1, (uint16_t)((uint16_t)(1 << 3) | (uint16_t)(1 << 13)));
+  *UART2_REG(CTLR1) |= (uint16_t)(1 << 3);
+  /* Enable RXNE(RX buff Not Empty) interrupt for UART2 */
+  *UART2_REG(CTLR1) |= (uint16_t)(1 << 5);
+  /* Enable UART2 */
+  *UART2_REG(CTLR1) |= (uint16_t)(1 << 13);
 }
 
 void uart_putc(uint16_t ch) {
@@ -192,4 +205,52 @@ void uart_puts(char *s) {
   while (*s) {
     uart_putc(*s++);
   }
+}
+
+int uart1_getc(void) {
+  if (uart1_read_reg(STATR) & STATR_RX_READY) {
+    return (uint16_t)(uart1_read_reg(DATAR) & (uint16_t)0x01FF);
+  } else {
+    return -1;
+  }
+}
+
+int uart2_getc(void) {
+  if (uart2_read_reg(STATR) & STATR_RX_READY) {
+    return (uint16_t)(uart2_read_reg(DATAR) & (uint16_t)0x01FF);
+  } else {
+    return -1;
+  }
+}
+
+/*
+ * handle uart1 interrupt, raised because input has arrived, 
+ * called from trap.c. The reserved data will be print by uart2.
+ */
+void uart1_irq_handler(void) {
+	while (1) {
+		int c = uart1_getc();
+		if (c == -1) {
+			break;
+		} else {
+			uart_putc((char)c);
+			uart_putc('\n');
+		}
+	}
+}
+
+/*
+ * handle uart2 interrupt, raised because input has arrived, 
+ * called from trap.c. The reserved data will be print by uart2.
+ */
+void uart2_irq_handler(void) {
+	while (1) {
+		int c = uart2_getc();
+		if (c == -1) {
+			break;
+		} else {
+			uart_putc((char)c);
+			uart_putc('\n');
+		}
+	}
 }

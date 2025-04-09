@@ -1,6 +1,6 @@
 #include "context.h"
 #include "minilib.h"
-#include "csr.h"
+#include "platform.h"
 
 /* defined in entry.S */
 extern void switch_to(struct context *next);

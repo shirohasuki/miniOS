@@ -28,4 +28,4 @@ _start:
 2:
   j       start_kernel  # jump to start_kernel
 
-  .end
+.end

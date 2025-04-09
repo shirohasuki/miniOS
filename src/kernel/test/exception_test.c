@@ -18,5 +18,9 @@ void exception_test() {
   printf("a = %d\n", a);
 
   printf("back from trap!\n");
+  /* 
+   * Test on CH32V307 shows that, when trigger a exception 
+   * and not been handled, the program will halt and restart.
+   */
   printf("===Exception Test End===\n");
 }

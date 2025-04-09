@@ -42,3 +42,6 @@ make flash
 
 - [CH32FV2x_V3xRM.PDF](doc/CH32FV2x_V3xRM.PDF)
 - [CH32V307DS0.PDF](doc/CH32V307DS0.PDF)
+
+已知问题
+当进入while后使用中断会直接halt
