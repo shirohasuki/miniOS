@@ -5,10 +5,12 @@
 #include "include/test.h"
 
 void start_kernel(void) {
-  uart_init();
+  uart2_init();
   printf("Hello, miniOS!\n");
 
   page_test();
+
+  // init_shell();
 
   while (1) {}
 }

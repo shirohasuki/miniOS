@@ -3,8 +3,11 @@
 
 #define RCC_REG(reg)  ((volatile uint32_t *)(RCC + (reg << 2)))
 #define GPIO_REG(reg)  ((volatile uint32_t *)(GPIOA + (reg << 2)))
-#define UART_REG(reg) ((volatile uint32_t *)(UART1 + (reg << 2)))
+#define UART1_REG(reg) ((volatile uint32_t *)(USART1 + (reg << 2)))
+#define UART2_REG(reg) ((volatile uint32_t *)(USART2 + (reg << 2)))
 
+
+// ref CH32FV2x_V3xRM.PDF v2.3 p32 
 typedef enum {
   CTLR = 0,
   CFGR0 = 1,
@@ -60,11 +63,14 @@ typedef enum {
 #define gpio_read_reg(reg) (*(GPIO_REG(reg)))
 #define gpio_write_reg(reg, v) (*(GPIO_REG(reg)) = (v))
 
-#define uart_read_reg(reg) (*(UART_REG(reg)))
-#define uart_write_reg(reg, v) (*(UART_REG(reg)) = (v))
+#define uart1_read_reg(reg) (*(UART1_REG(reg)))
+#define uart1_write_reg(reg, v) (*(UART1_REG(reg)) = (v))
+
+#define uart2_read_reg(reg) (*(UART2_REG(reg)))
+#define uart2_write_reg(reg, v) (*(UART2_REG(reg)) = (v))
 
 /* UART1 Init*/
-void uart_init() {
+void uart1_init() {
   /* Enable HSI */
   *RCC_REG(CTLR) |= (uint32_t)0x00000001;
 
@@ -99,9 +105,9 @@ void uart_init() {
   rcc_write_reg(APB2PCENR, (uint32_t)((uint32_t)(1 << 14) | (uint32_t)(1 << 2)));
 
   /*
-   * Setting GPIO PA9 to
-   * - Reuse push-pull output mode
-   * - Speed 50MHz
+   * Setting GPIO PA9 (TX1) to
+   * - Reuse push-pull output mode（CNF[1:0] = 10)
+   * - Speed 50MHz (MODE[1:0] = 11)
    */
   *GPIO_REG(CFGHR) |= (uint32_t)(0x000000B0);
 
@@ -111,15 +117,75 @@ void uart_init() {
    * - DIV_M: [15:4] of BRR
    * - DIV_F: [3:0] of BRR
    */
-  uart_write_reg(BRR, (uint16_t)0x0341);
+  uart1_write_reg(BRR, (uint16_t)0x0341);
 
-  /* Enable Tx for UART0 */
-  uart_write_reg(CTLR1, (uint16_t)((uint16_t)(1 << 3) | (uint16_t)(1 << 13)));
+  /* Enable Tx for UART1 */
+  uart1_write_reg(CTLR1, (uint16_t)((uint16_t)(1 << 3) | (uint16_t)(1 << 13)));
+}
+
+/* UART2 Init*/
+void uart2_init() {
+  /* Enable HSI */
+  *RCC_REG(CTLR) |= (uint32_t)0x00000001;
+
+  /* PLL multiplied by 12 */
+  *RCC_REG(CFGR0) |= (uint32_t)(0x00280000);
+
+  /* Enable PLL */
+  *RCC_REG(CTLR) |= (uint32_t)0x01000000;
+
+  /* Wait till PLL is ready */
+  while((*RCC_REG(CTLR) & (uint32_t)0x02000000) == 0);
+
+  /* 
+   * Select PLL as system clock source
+   *
+   * HSI = 8MHz
+   * PLLSRC = HSI / 2 = 4MHz
+   * PLL = PLLSRC * 12 = 48MHz
+   * SYSCLK = PLL = 48MHz
+   * 
+   * Attention: USART2 is on APB1, USART1 is on APB2
+   * APB1 config PPRE1 to divide frequency (default not divide).
+   * APB2 config PPRE2 to divide frequency (default not divide).
+   * Theoretically, the default crossover coefficient for both APB1 and APB2 is 1, 
+   * but I don't know why we need to set APB1 separately (APB2 does not need to set). 
+   */
+  *RCC_REG(CFGR0) &= (uint32_t)((uint32_t)~(0x7 << 10));
+  *RCC_REG(CFGR0) |= (uint32_t)((uint32_t)(1 << 1) | (uint32_t)(0x4 << 10));
+  /* 
+   * Wait till PLL is used as system clock source
+   */
+  while ((rcc_read_reg(CFGR0) & (uint32_t)0x0000000C) != (uint32_t)0x08);
+
+  /*
+   * Enable clock of USART2 and GPIO_PA
+   */
+  rcc_write_reg(APB1PCENR, (uint32_t)(1 << 17));
+  rcc_write_reg(APB2PCENR, (uint32_t)(1 << 2));
+
+  /*
+   * Setting GPIO PA2 (TX2) to
+   * - Reuse push-pull output mode (CNF[1:0] = 10)
+   * - Speed 50MHz (MODE[1:0] = 11)
+   */
+  *GPIO_REG(CFGLR) |= (uint32_t)(0xB << 8);
+
+  /* Set baud rate to 57600
+   * BaudRate = FCLK / (16 * USARTDIV)
+   * USARTDIV = DIV_M + ( DIV_F / 16)
+   * - DIV_M: [15:4] of BRR
+   * - DIV_F: [3:0] of BRR
+   */
+  uart2_write_reg(BRR, (uint16_t)0x0341);
+
+  /* Enable Tx for UART2 */
+  uart2_write_reg(CTLR1, (uint16_t)((uint16_t)(1 << 3) | (uint16_t)(1 << 13)));
 }
 
 void uart_putc(uint16_t ch) {
-  uart_write_reg(DATAR, (ch & (uint16_t)0x01FF));
-  while ((uart_read_reg(STATR) & STATR_TX_IDLE) == (uint16_t)0);
+  uart2_write_reg(DATAR, (ch & (uint16_t)0x01FF));
+  while ((uart2_read_reg(STATR) & STATR_TX_IDLE) == (uint16_t)0);
 }
 
 void uart_puts(char *s) {

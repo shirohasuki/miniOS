@@ -2,22 +2,7 @@
 #include <stdarg.h>
 #include "types.h"
 #include "minilib.h"
-
-/*
- * Following global vars are defined in mem.S
- */
-extern uint32_t TEXT_START;
-extern uint32_t TEXT_END;
-extern uint32_t DATA_START;
-extern uint32_t DATA_END;
-extern uint32_t RODATA_START;
-extern uint32_t RODATA_END;
-extern uint32_t BSS_START;
-extern uint32_t BSS_END;
-extern uint32_t HEAP_START;
-extern uint32_t HEAP_SIZE;
-extern uint32_t STACK_START;
-extern uint32_t STACK_END;
+#include "mem.h"
 
 /*
  * _alloc_start points to the actual start address of heap pool

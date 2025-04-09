@@ -18,6 +18,7 @@ set_source_files_properties(./mem/mem.S PROPERTIES
 
 target_include_directories(kernel PRIVATE
   ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/src/kernel/include
   ${CMAKE_SOURCE_DIR}/platform
-  ${CMAKE_SOURCE_DIR}/lib
+  ${CMAKE_SOURCE_DIR}/minilib
 ) 

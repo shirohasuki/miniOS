@@ -13,13 +13,15 @@ set(CMAKE_OBJDUMP riscv64-unknown-elf-objdump)
 set(KERNEL_PATH ${CMAKE_SOURCE_DIR}/src/kernel)
 
 add_subdirectory(src/kernel)
+# add_subdirectory(src/minishell)
 add_subdirectory(platform)
-add_subdirectory(lib)
+add_subdirectory(minilib)
 
 add_executable(miniOS.elf
   $<TARGET_OBJECTS:kernel>
+  # $<TARGET_OBJECTS:minishell>
   $<TARGET_OBJECTS:platform>
-  $<TARGET_OBJECTS:lib>
+  $<TARGET_OBJECTS:minilib>
 )
 
 set_target_properties(miniOS.elf PROPERTIES
