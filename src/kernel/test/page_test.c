@@ -6,8 +6,7 @@ int global_init = 0x11111111;
 const int global_const = 0x22222222;
 
 void page_test(void) {
-
-  page_init();
+  printf("============Page Test Start============\n");
 
   static int static_var = 0x33333333;
   static int static_var_uninit;
@@ -30,5 +29,5 @@ void page_test(void) {
   void *p3 = page_alloc(4);
   printf("p3 = %p\n", p3);
 
-  while (1) {};
+  printf("============Page Test End============\n");
 }

@@ -10,9 +10,9 @@
  * 0x4001 3800 -- USART1
  * 0x4002 1000 -- RCC
  */
-#define GPIOA 0x40010800L
-#define USART1 0x40013800L
-#define USART2 0x40004400L
-#define RCC   0x40021000L
+#define GPIOA   0x40010800L
+#define USART1  0x40013800L
+#define USART2  0x40004400L
+#define RCC     0x40021000L
 
 #endif /* __MAPPING_H__ */

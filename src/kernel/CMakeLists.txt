@@ -5,16 +5,24 @@ add_library(kernel OBJECT
   mem/mem.S
   mem/page.c
 
-  test/page_test.c
+  context/sched.c
+  context/entry.S
+
+  test/page_test.c 
+  test/task_test.c
 )
 
-set_source_files_properties(start.S PROPERTIES
-  LANGUAGE ASM
-)
+# set_source_files_properties(start.S PROPERTIES
+#   LANGUAGE ASM
+# )
 
-set_source_files_properties(./mem/mem.S PROPERTIES
-  LANGUAGE ASM
-)
+# set_source_files_properties(./mem/mem.S PROPERTIES
+#   LANGUAGE ASM
+# )
+
+# set_source_files_properties(./context/entry.S PROPERTIES
+#   LANGUAGE ASM
+# )
 
 target_include_directories(kernel PRIVATE
   ${CMAKE_SOURCE_DIR}/include
