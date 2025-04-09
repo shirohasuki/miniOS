@@ -2,6 +2,7 @@
 #include "types.h"
 #include "minilib.h"
 #include "platform.h"
+#include "context.h"
 
 extern void trap_vector(void);
 
@@ -25,6 +26,12 @@ reg_t trap_handler(reg_t epc, reg_t cause) {
       case 12:
         // uart_puts("SysTick interruption!\n");
         timer_handler();
+        break;
+      case 14:
+        // printf("Software interruption!\n");
+        /* Clear the software interrupt bit */
+        STK_REG->CTLR &= ~((uint32_t)(1 << 31));
+        schedule();
         break;
       case 53: 
         // printf("USART1 interruption!\n");

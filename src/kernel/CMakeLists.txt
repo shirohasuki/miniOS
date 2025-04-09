@@ -1,6 +1,7 @@
 add_library(kernel OBJECT
   start.S
   kernel.c
+  user.c
 
   mem/mem.S
   mem/page.c
@@ -18,6 +19,7 @@ add_library(kernel OBJECT
   test/task_test.c
   test/exception_test.c
   test/external_interrupt_test.c
+  test/preemptive_task_test.c
 )
 
 target_include_directories(kernel PRIVATE

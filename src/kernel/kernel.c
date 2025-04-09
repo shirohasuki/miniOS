@@ -5,6 +5,8 @@
 #include "include/kernel.h"
 #include "include/test.h"
 
+extern void os_main(void);
+
 void start_kernel(void) {
   rcc_init();
   uart2_init();
@@ -19,9 +21,10 @@ void start_kernel(void) {
 
   /* test case */
   // page_test();
-  task_test();
+  // task_test();
   // exception_test();
   // external_interrupt_test();
+  os_main();
 
   while (1) { printf("should not be here\n"); }
 }
