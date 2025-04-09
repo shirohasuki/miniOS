@@ -54,3 +54,5 @@ write_mtvec:
 read_mcause:
   csrr a0, mcause
   ret 
+
+.end

@@ -6,13 +6,15 @@
 #include "include/test.h"
 
 void start_kernel(void) {
-  // uart1_init();
+  rcc_init();
   uart2_init();
   printf("Hello, miniOS!\n");
 
   page_init();
-  pfic_init();
   trap_init();
+  pfic_init();
+  timer_init();
+  
   sched_init();
 
   /* test case */

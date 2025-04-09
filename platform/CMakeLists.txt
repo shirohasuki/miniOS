@@ -1,6 +1,8 @@
 add_library(platform OBJECT
   ch32v307/uart.c
   ch32v307/pfic.c
+  ch32v307/timer.c
+  ch32v307/rcc.c
 
   ch32v307/csr.S
 )
