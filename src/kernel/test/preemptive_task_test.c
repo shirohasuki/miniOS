@@ -9,7 +9,7 @@
  * task 0 and task 1 will be running in turn
  */
 
-void user_task0(void) {
+static void user_task0(void) {
   printf("Task 0: Created!\n");
   while (1) {
     printf("Task 0: Running...\n");
@@ -17,7 +17,7 @@ void user_task0(void) {
   }
 }
 
-void user_task1(void) {
+static void user_task1(void) {
   printf("Task 1: Created!\n"); 
   while (1) {
     printf("Task 1: Running...\n");
@@ -25,7 +25,7 @@ void user_task1(void) {
   }
 }
 
-void task_test(void) {
+void preemptive_task_test(void) {
   printf("============Task Test Start============\n");
   task_create(user_task0);
   task_create(user_task1);

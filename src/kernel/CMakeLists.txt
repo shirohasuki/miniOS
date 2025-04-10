@@ -15,11 +15,15 @@ add_library(kernel OBJECT
   trap/trap.c
   trap/trap.S
 
+  syscall/syscall.c
+  syscall/usys.S
+
   test/page_test.c 
   test/task_test.c
   test/exception_test.c
   test/external_interrupt_test.c
   test/preemptive_task_test.c
+  test/syscall_test.c
 )
 
 target_include_directories(kernel PRIVATE

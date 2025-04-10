@@ -2,7 +2,7 @@
 #include "types.h"
 #include "minilib.h"
 #include "platform.h"
-#include "context.h"
+#include "syscall.h"
 
 extern void trap_vector(void);
 
@@ -17,7 +17,7 @@ void trap_init() {
  * 53: USART1
  * 54: USART2
  */
-reg_t trap_handler(reg_t epc, reg_t cause) {
+reg_t trap_handler(reg_t epc, reg_t cause, struct context *cxt) {
   reg_t return_pc = epc;
   reg_t cause_code = cause & 0xfff; /* clear the top 4 bits */
 
@@ -46,12 +46,21 @@ reg_t trap_handler(reg_t epc, reg_t cause) {
         break;
       }
   } else {
-    printf("exception! code = %d\n", cause_code);
-    /* 
-     * we don't handle this exception 
-     * so the trap test will loop here
-     */
+    switch (cause) {
+      case 11:
+        printf("System call from U-mode!\n");
+        do_syscall(cxt);
+        return_pc += 4;
+        break;
+      default:
+        printf("exception! code = %d\n", cause_code);
+        panic("System stall!");
+        /* we don't handle this exception 
+         * so the trap test will loop here
+         */
+    }
   }
+
   return return_pc;
 }
 

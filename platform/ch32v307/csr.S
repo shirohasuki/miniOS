@@ -55,4 +55,9 @@ read_mcause:
   csrr a0, mcause
   ret 
 
+.global read_marchid
+read_marchid:
+  csrr a0, marchid
+  ret
+
 .end

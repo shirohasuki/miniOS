@@ -39,6 +39,10 @@ struct context {
     reg_t t4;
     reg_t t5;
     reg_t t6;
+    // upon is trap frame
+
+    // save the pc to run in next schedule cycle
+    reg_t pc; // offset: 31 * 4 = 124
 };
 
 void sched_init();

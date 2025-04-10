@@ -29,7 +29,7 @@ void timer_init() {
 #include "../minilib/minilib.h"
 void timer_handler() {
   _tick++;
-  printf("tick: %d\n", _tick);
+  // printf("tick: %d\n", _tick);
   /* Clear the status register flag bit */
   STK_REG->CTLR |= (uint32_t)(1 << 5);
   STK_REG->SR &= ~(1 << 0);
