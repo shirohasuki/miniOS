@@ -51,4 +51,8 @@ int task_create(void (*start_routine)(void));
 void task_yield();
 void task_delay(volatile int count);
 
+/* Lock */
+int spin_lock();
+int spin_unlock();
+
 #endif /* __CONTEXT_H__ */

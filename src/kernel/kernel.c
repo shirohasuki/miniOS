@@ -25,7 +25,9 @@ void start_kernel(void) {
   // exception_test();
   // external_interrupt_test();
   // preemptive_task_test();
-  syscall_test();
+  // syscall_test();
+  timer_test();
+  // lock_test();
   // os_main();
 
   while (1) { 

@@ -8,10 +8,9 @@ add_library(kernel OBJECT
 
   context/sched.c
   context/entry.S
+  context/lock.c
 
-  # csr/csr.c
-  # csr/csr.S
-
+  timer/stimer.c
   trap/trap.c
   trap/trap.S
 
@@ -24,6 +23,8 @@ add_library(kernel OBJECT
   test/external_interrupt_test.c
   test/preemptive_task_test.c
   test/syscall_test.c
+  test/timer_test.c
+  test/lock_test.c
 )
 
 target_include_directories(kernel PRIVATE

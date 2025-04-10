@@ -1,7 +1,9 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
-void timer_init();
-void timer_handler();
+#include "types.h"
 
-#endif
+void timer_init();
+// void timer_handler(); // hwtimer is used instead by stimer
+
+#endif /* __TIMER_H__ */

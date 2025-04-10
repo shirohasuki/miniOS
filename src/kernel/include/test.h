@@ -7,5 +7,7 @@ void exception_test(void);
 void external_interrupt_test(void);
 void preemptive_task_test(void);
 void syscall_test(void);
+void timer_test(void);
+void lock_test(void);
 
 #endif /* TEST_H */

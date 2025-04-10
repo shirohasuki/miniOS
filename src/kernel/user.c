@@ -1,6 +1,7 @@
 // #include "app/minishell/include/shell.h"
 #include "context.h"
 #include "minilib.h"
+
 static void user_task0(void) {
   printf("Task 0: Created!\n");
   while (1) {

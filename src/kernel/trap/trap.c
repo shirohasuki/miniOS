@@ -3,6 +3,7 @@
 #include "minilib.h"
 #include "platform.h"
 #include "syscall.h"
+#include "stimer.h" // for timer_handler
 
 extern void trap_vector(void);
 
