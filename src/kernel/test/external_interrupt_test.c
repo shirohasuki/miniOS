@@ -2,6 +2,10 @@
 #include "context.h"
 #include "minilib.h"
 
+/*
+ * This test has some issues, will halt in while.
+ */
+
 void external_interrupt_test() {
   printf("===External Interrupt Test Start===\n");
   printf("You can type something to test if external interrupt works.\n");

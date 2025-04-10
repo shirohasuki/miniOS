@@ -1,6 +1,7 @@
 #include "types.h"
 #include "map.h"
 #include "uart.h"
+#include "stdbuff.h"
 
 // ref CH32FV2x_V3xRM.PDF v2.3 p32 
 
@@ -86,13 +87,12 @@ void uart1_irq_handler(void) {
  * called from trap.c. The reserved data will be print by uart2.
  */
 void uart2_irq_handler(void) {
-	while (1) {
-		int c = uart_getc();
-		if (c == -1) {
-			break;
-		} else {
-			uart_putc((char)c);
-			uart_putc('\n');
-		}
-	}
+  while (1) {
+    int c = uart_getc();
+    if (c == -1) {
+      break;
+    } else {
+      stdio_pushc((char)c);
+    }
+  }
 }

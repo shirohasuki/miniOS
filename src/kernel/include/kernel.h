@@ -5,5 +5,6 @@
 #include "context.h"
 #include "trap.h"
 #include "syscall.h"
+#include "mem.h"
 
 #endif /* KERNEL_H */

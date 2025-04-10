@@ -103,12 +103,17 @@ trap_vector:
   csrr  t6, mscratch    # read t6 back from mscratch
   sw    t6, 120(t5)     # save t6 with t5 as base
 
+  # save mepc to context of current task
+  csrr    a0, mepc
+  sw      a0, 124(t5)
+
   # Restore the context pointer info mscratch
   csrw  mscratch, t5
 
   # call the C trap handler in trap.c
   csrr  a0, mepc
   csrr  a1, mcause
+  csrr  a2, mscratch
   call  trap_handler
 
   # trap_handler will return the return address via a0.

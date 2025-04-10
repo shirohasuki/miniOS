@@ -25,11 +25,16 @@ make
 cd build
 make flash
 ```
+
+*Now, Enjoy it!*
+
+![demo](./image/demo.png)
+
 ## Features List
 - 支持动态内存管理
 - 支持上下文切换和多任务
 - 支持异常与中断处理
-- 支持用户态隔离
+- 支持简易系统调用
 
 ### Application (TBC)
 
@@ -43,5 +48,7 @@ make flash
 - [CH32FV2x_V3xRM.PDF](doc/CH32FV2x_V3xRM.PDF)
 - [CH32V307DS0.PDF](doc/CH32V307DS0.PDF)
 
-已知问题
-当进入while后使用中断会直接halt
+## 已知问题
+
+- 当进入while后使用中断会直接halt
+- 理论上shell的输入应该由keyboard的中断来触发，而不是uart2的中断，但目前没有keyboard进行实验，所以使用uart2的中断来触发shell的输入。

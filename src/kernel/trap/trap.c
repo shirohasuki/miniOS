@@ -25,7 +25,7 @@ reg_t trap_handler(reg_t epc, reg_t cause, struct context *cxt) {
   if (cause & 0x80000000) {
     switch (cause_code) {
       case 12:
-        // uart_puts("SysTick interruption!\n");
+        // uart_puts("Timer interruption!\n");
         timer_handler();
         break;
       case 14:
@@ -49,7 +49,7 @@ reg_t trap_handler(reg_t epc, reg_t cause, struct context *cxt) {
   } else {
     switch (cause) {
       case 11:
-        printf("System call from U-mode!\n");
+        // printf("System call from U-mode!\n");
         do_syscall(cxt);
         return_pc += 4;
         break;

@@ -26,9 +26,11 @@ void start_kernel(void) {
   // external_interrupt_test();
   // preemptive_task_test();
   // syscall_test();
-  timer_test();
+  // timer_test();
   // lock_test();
-  // os_main();
+  
+  os_main();
+  schedule();
 
   while (1) { 
     printf("should not be here\n"); 

@@ -4,7 +4,7 @@
 #include "platform.h"
 
 int sys_getarchid(unsigned int *ptr_archid) {
-  printf("--> sys_getarchid, arg0 = 0x%x\n", ptr_archid);
+  // printf("--> sys_getarchid, arg0 = 0x%x\n", ptr_archid);
   if (ptr_archid == NULL) {
     return -1;
   }

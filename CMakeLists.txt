@@ -18,10 +18,12 @@ add_subdirectory(minilib)
 add_subdirectory(src/app)
 
 add_executable(miniOS.elf
+  # Os
   $<TARGET_OBJECTS:kernel>
   $<TARGET_OBJECTS:platform>
   $<TARGET_OBJECTS:minilib>
-  # $<TARGET_OBJECTS:app>
+  # Application
+  $<TARGET_OBJECTS:minishell>
 )
 
 set_target_properties(miniOS.elf PROPERTIES

@@ -1,6 +1,8 @@
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 
+#include "device/device.h"
+
 #define PLATFORM_CH32V307 1
 
 #if PLATFORM_CH32V307
